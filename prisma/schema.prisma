@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// One row per agent your OpenClaw stack runs. Agents self-report here
+/// via POST /api/agents/state. The dashboard reads from this table.
+model AgentState {
+  id             String    @id                    // stable id: "content-writer", "trading-bot", etc.
+  name           String                           // human-friendly name
+  emoji          String?                          // rendered on cards
+  role           String?                          // "Content", "Trading", "Research", etc.
+  status         String    @default("offline")    // "online" | "idle" | "working" | "offline" | "error"
+  lastActive     DateTime?
+  tasksCompleted Int       @default(0)
+  totalCost      Float     @default(0)            // cumulative $ spent on API calls
+  currentTask   String?                           // what it's doing right now
+  recentActivity Json?     @default("[]")         // array of { timestamp, message }
+  updatedAt      DateTime  @updatedAt
+}
+
+/// A unit of work assigned to an agent. Agents pick up pending missions,
+/// run them, and update status to "completed" or "failed".
+model Mission {
+  id          String    @id @default(uuid())
+  agentId     String
+  title       String
+  description String    @db.Text
+  status      String    @default("pending")    // pending | active | completed | failed
+  priority    String    @default("medium")     // high | medium | low
+  result      String?   @db.Text
+  createdAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  @@index([agentId])
+  @@index([status])
+}
+
+/// Ideas your agents generate for you to review.
+model Idea {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  category    String?
+  source      String?                          // which agent created it
+  status      String?  @default("pending")     // pending | approved | rejected
+  timestamp   DateTime @default(now())
+
+  @@index([category])
+  @@index([status])
+}
+
+/// Generic key-value store for agent-specific config and scratch data.
+/// Use this when you need to persist something simple without adding a model.
+model DataStore {
+  key       String   @id
+  data      Json
+  updatedAt DateTime @updatedAt
+}
