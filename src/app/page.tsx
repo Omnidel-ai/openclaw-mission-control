@@ -39,11 +39,11 @@ export default async function HomePage() {
           <div className="text-[14px] font-medium mb-1">No agents yet.</div>
           <div className="text-[13px] text-[var(--ink-2)]">
             Run{" "}
-            <code className="px-1.5 py-0.5 rounded" style={{ background: "#000", color: "var(--accent)" }}>
+            <code className="px-1.5 py-0.5 rounded" style={{ background: "var(--line)", color: "var(--accent)" }}>
               npm run seed:demo
             </code>{" "}
             to populate sample agents, or wire your OpenClaw agents to POST to{" "}
-            <code className="px-1.5 py-0.5 rounded" style={{ background: "#000" }}>/api/agents/state</code>.
+            <code className="px-1.5 py-0.5 rounded" style={{ background: "var(--line)" }}>/api/agents/state</code>.
           </div>
         </div>
       )}

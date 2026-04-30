@@ -22,7 +22,7 @@ export function Sidebar() {
       <div className="flex items-center gap-2 px-2 py-1.5 mb-6 font-semibold text-[15px] tracking-[-0.01em]">
         <div
           className="w-6 h-6 rounded-md grid place-items-center"
-          style={{ background: "var(--accent)", color: "#000" }}
+          style={{ background: "var(--accent)", color: "#FFFFFF" }}
         >
           O
         </div>

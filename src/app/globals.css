@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0a0a0a;
-  --panel: #111111;
-  --line: #1f1f1f;
-  --ink: #ededed;
-  --ink-2: #a1a1aa;
-  --ink-3: #71717a;
-  --accent: #10b981;
+  --bg: #FAF7F2;
+  --panel: #FFFFFF;
+  --line: #E8DFD3;
+  --ink: #2C2418;
+  --ink-2: #7D7164;
+  --ink-3: #A69C8F;
+  --accent: #6B8F5E;
 }
 
 html, body {
