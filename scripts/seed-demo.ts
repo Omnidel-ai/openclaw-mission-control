@@ -1,6 +1,7 @@
 /**
- * Seed demo data so a fresh install has something to look at.
- * Run once with `npm run seed:demo`. Safe to re-run (upserts by id).
+ * Seed OmniDEL / KarmYog / RARE India agents into Mission Control.
+ * Top 11 by activity as of 2026-04-30.
+ * Run: npm run seed:demo
  */
 import { PrismaClient } from "@prisma/client";
 
@@ -8,76 +9,119 @@ const prisma = new PrismaClient();
 
 const AGENTS = [
   {
-    id: "content-writer",
-    name: "Content Writer",
-    emoji: "✍️",
-    role: "Content",
-    status: "working",
-    tasksCompleted: 42,
-    totalCost: 3.14,
-    currentTask: "Drafting 3 tweets about agent workflows",
-  },
-  {
-    id: "research-analyst",
-    name: "Research Analyst",
-    emoji: "🔎",
-    role: "Research",
-    status: "idle",
-    tasksCompleted: 18,
-    totalCost: 1.08,
-    currentTask: null,
-  },
-  {
-    id: "growth-scout",
-    name: "Growth Scout",
-    emoji: "📈",
-    role: "Growth",
+    id: "maya",
+    name: "Maya",
+    emoji: "📧",
+    role: "HR & Ops",
     status: "online",
-    tasksCompleted: 9,
-    totalCost: 0.44,
-    currentTask: "Scanning for trending topics in your niche",
-  },
-  {
-    id: "inbox-triage",
-    name: "Inbox Triage",
-    emoji: "📬",
-    role: "Ops",
-    status: "offline",
-    tasksCompleted: 7,
-    totalCost: 0.12,
+    tasksCompleted: 0,
+    totalCost: 0,
     currentTask: null,
   },
-];
-
-const MISSIONS = [
-  { agentId: "content-writer", title: "Write teardown of agent stack", status: "active", priority: "high" },
-  { agentId: "research-analyst", title: "Pull top 10 videos on AI agents", status: "pending", priority: "medium" },
-  { agentId: "growth-scout", title: "Competitor scan: LLM wrapper startups", status: "pending", priority: "low" },
-];
-
-const IDEAS = [
   {
-    title: "AI agents that audit your inbox for unanswered customer DMs",
-    description: "Automated triage + suggested replies in your voice",
-    source: "inbox-triage",
-    status: "pending",
+    id: "sparrow",
+    name: "Sparrow",
+    emoji: "🐦",
+    role: "EA (Shobhana)",
+    status: "online",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
   },
   {
-    title: "Mission Control teardown video (this repo)",
-    description: "Show how one dashboard unifies every agent you run",
-    source: "growth-scout",
-    status: "pending",
+    id: "bubun",
+    name: "Bubun",
+    emoji: "💬",
+    role: "Team Comms",
+    status: "online",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
   },
   {
-    title: "Weekly 'agent standup' digest",
-    description: "Every agent reports top 3 accomplishments, blockers, asks",
-    source: "content-writer",
-    status: "pending",
+    id: "pannadi",
+    name: "Panna Di",
+    emoji: "🏪",
+    role: "KarmYog Ops",
+    status: "online",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
+  },
+  {
+    id: "bridges-aarti",
+    name: "Aarti",
+    emoji: "🌉",
+    role: "Bridges Event",
+    status: "idle",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
+  },
+  {
+    id: "rare-snow-leopard",
+    name: "Dorje",
+    emoji: "🐆",
+    role: "Snow Leopard Lodge",
+    status: "idle",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
+  },
+  {
+    id: "rare-sitla",
+    name: "Ravi",
+    emoji: "🌿",
+    role: "Sitla Estate",
+    status: "idle",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
+  },
+  {
+    id: "rare-sat",
+    name: "SAT Concierge",
+    emoji: "🏨",
+    role: "SAT Hotel",
+    status: "idle",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
+  },
+  {
+    id: "rare-bookrare",
+    name: "BookRare",
+    emoji: "📖",
+    role: "RARE Bookings",
+    status: "idle",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
+  },
+  {
+    id: "rare-lali",
+    name: "Lali Concierge",
+    emoji: "🌺",
+    role: "Lali Hotel",
+    status: "idle",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
+  },
+  {
+    id: "anto",
+    name: "Anto",
+    emoji: "🧠",
+    role: "Knowledge Agent",
+    status: "idle",
+    tasksCompleted: 0,
+    totalCost: 0,
+    currentTask: null,
   },
 ];
 
 async function main() {
-  console.log("Seeding demo data...");
+  console.log("Seeding OmniDEL Mission Control...");
 
   for (const a of AGENTS) {
     await prisma.agentState.upsert({
@@ -86,28 +130,7 @@ async function main() {
       update: { ...a, lastActive: new Date() },
     });
   }
-  console.log(`  ${AGENTS.length} agents`);
-
-  const existingMissions = await prisma.mission.count();
-  if (existingMissions === 0) {
-    for (const m of MISSIONS) {
-      await prisma.mission.create({ data: { ...m, description: m.title } });
-    }
-    console.log(`  ${MISSIONS.length} missions`);
-  } else {
-    console.log(`  missions: already have ${existingMissions}, skipping`);
-  }
-
-  const existingIdeas = await prisma.idea.count();
-  if (existingIdeas === 0) {
-    for (const i of IDEAS) {
-      await prisma.idea.create({ data: i });
-    }
-    console.log(`  ${IDEAS.length} ideas`);
-  } else {
-    console.log(`  ideas: already have ${existingIdeas}, skipping`);
-  }
-
+  console.log(`  ${AGENTS.length} agents seeded`);
   console.log("Done. Open http://localhost:3000 to see the dashboard.");
 }
 
