@@ -18,6 +18,9 @@ model AgentState {
   lastActive     DateTime?
   tasksCompleted Int       @default(0)
   totalCost      Float     @default(0)            // cumulative $ spent on API calls
+  costToday      Float     @default(0)            // cost in last 24h
+  costWeek       Float     @default(0)            // cost in last 7 days
+  costMonth      Float     @default(0)            // cost in last 30 days
   currentTask   String?                           // what it's doing right now
   recentActivity Json?     @default("[]")         // array of { timestamp, message }
   updatedAt      DateTime  @updatedAt

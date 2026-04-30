@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     role,
     status,
     tasksCompleted,
-    totalCost,
+    totalCost, costToday, costWeek, costMonth,
     currentTask,
     recentActivity,
   } = body || {};

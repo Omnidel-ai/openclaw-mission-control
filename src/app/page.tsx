@@ -57,12 +57,9 @@ export default async function HomePage() {
 
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-[16px] font-semibold">Agents</h2>
-        <Link href="/agents" className="text-[13px] text-[var(--ink-2)] hover:text-[var(--ink)]">
-          View all →
-        </Link>
-      </div>
+        </div>
       <div className="grid grid-cols-2 gap-3">
-        {s.agents.slice(0, 6).map((a) => (
+        {s.agents.map((a) => (
           <div
             key={a.id}
             className="p-4 rounded-xl flex items-center gap-3"
@@ -80,7 +77,11 @@ export default async function HomePage() {
             </div>
             <div className="text-right text-[12px] text-[var(--ink-3)]">
               <div>{a.tasksCompleted} tasks</div>
-              <div>${(a.totalCost || 0).toFixed(2)}</div>
+              <div className="space-y-0.5">
+                <div>Today: ${((a as any).costToday || 0).toFixed(2)}</div>
+                <div>7d: ${((a as any).costWeek || 0).toFixed(2)}</div>
+                <div>30d: ${((a as any).costMonth || 0).toFixed(2)}</div>
+              </div>
             </div>
           </div>
         ))}
